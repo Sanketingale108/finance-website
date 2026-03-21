@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinWise — Finance Made Simple</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg2:#0b1730;
+      --card:#0f1c35cc;
+      --card2:#122242;
+      --text:#eaf1ff;
+      --muted:#a9b8d6;
+      --accent:#5eead4;
+      --accent2:#7c9cff;
+      --warning:#ffd166;
+      --good:#4ade80;
+      --shadow: 0 18px 40px rgba(0,0,0,.32);
+      --radius: 22px;
+      --border: 1px solid rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(94,234,212,.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(124,156,255,.18), transparent 25%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--text);
+      overflow:hidden;
+    }
+    .app{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      padding:20px;
+      gap:18px;
+      max-width:1200px;
+      margin:0 auto;
+    }
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:18px 20px;
+      background:rgba(10,18,34,.62);
+      backdrop-filter: blur(10px);
+      border:var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;
+      font-weight:800;font-size:1.1rem;
+    }
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#04111d;font-size:1.3rem;
+      box-shadow:0 12px 25px rgba(94,234,212,.18);
+    }
+    .subtitle{color:var(--muted);font-size:.95rem}
+    .pill{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:var(--border);
+      color:var(--muted);
+      font-size:.92rem;
+      white-space:nowrap;
+    }
+    .grid{
+      flex:1;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      min-height:0;
+    }
+    .left,.right{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      min-height:0;
+    }
+    .hero, .card{
+      background:linear-gradient(180deg, rgba(18,34,66,.9), rgba(10,18,34,.78));
+      border:var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero{
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:20px;
+      align-items:center;
+    }
+    h1{
+      margin:0 0 12px;
+      font-size:clamp(2rem, 4vw, 3.6rem);
+      line-height:1.03;
+      letter-spacing:-.03em;
+    }
+    .lead{color:var(--muted);font-size:1.02rem;line-height:1.6;max-width:60ch}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .btn{
+      border:none;cursor:pointer;
+      padding:12px 18px;border-radius:14px;
+      font-weight:700;font-size:.96rem;
+      transition:.2s transform,.2s opacity,.2s background;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#04111d}
+    .btn-secondary{background:rgba(255,255,255,.06);color:var(--text);border:var(--border)}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+    .stat{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:var(--border);
+    }
+    .stat .label{color:var(--muted);font-size:.88rem;margin-bottom:8px}
+    .stat .value{font-size:1.55rem;font-weight:800}
+    .stat .trend{font-size:.86rem;margin-top:7px;color:var(--good)}
+    .card{
+      padding:20px;
+      min-height:0;
+    }
+    .section-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:16px;
+    }
+    .section-title h2{
+      font-size:1.1rem;margin:0;
+    }
+    .section-title span{color:var(--muted);font-size:.9rem}
+    .budget{
+      display:flex;flex-direction:column;gap:14px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 120px 1fr 70px;
+      gap:12px;
+      align-items:center;
+    }
+    .row .name{color:var(--text);font-weight:600}
+    .bar{
+      height:12px;border-radius:999px;background:rgba(255,255,255,.08);
+      overflow:hidden;border:1px solid rgba(255,255,255,.06);
+    }
+    .fill{
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+    }
+    .amount{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+    .tools{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .tool{
+      padding:16px;border-radius:18px;background:rgba(255,255,255,.05);
+      border:var(--border);
+    }
+    .tool .emoji{font-size:1.3rem}
+    .tool h3{margin:10px 0 6px;font-size:1rem}
+    .tool p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.45}
+    .calculator{
+      display:grid;
+      gap:12px;
+    }
+    .field{
+      display:grid;
+      gap:6px;
+    }
+    label{font-size:.88rem;color:var(--muted)}
+    input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      border:var(--border);
+      background:rgba(5,10,20,.55);
+      color:var(--text);
+      outline:none;
+      font-size:1rem;
+    }
+    input:focus{border-color:rgba(94,234,212,.5)}
+    .result{
+      padding:16px;
+      border-radius:18px;
+      background:linear-gradient(135deg, rgba(94,234,212,.12), rgba(124,156,255,.12));
+      border:1px solid rgba(255,255,255,.1);
+    }
+    .result strong{font-size:1.35rem}
+    .footer{
+      color:var(--muted);
+      font-size:.9rem;
+      text-align:center;
+      padding-bottom:2px;
+    }
+    @media (max-width: 900px){
+      body{overflow:auto}
+      .grid,.hero{grid-template-columns:1fr}
+    }
+    @media (max-width: 640px){
+      .app{padding:14px}
+      .topbar{flex-direction:column;align-items:flex-start}
+      .row{grid-template-columns: 1fr; gap:6px}
+      .amount{text-align:left}
+      .stats,.tools{grid-template-columns:1fr}
+      h1{font-size:2rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">💸</div>
+        <div>
+          <div>FinWise</div>
+          <div class="subtitle">Finance made simple, friendly, and actually useful</div>
+        </div>
+      </div>
+      <div class="pill">Smart budgeting • Saving • Investing basics</div>
+    </header>
+
+    <main class="grid">
+      <section class="left">
+        <div class="hero">
+          <div>
+            <h1>Take control of your money with confidence.</h1>
+            <div class="lead">
+              FinWise helps you understand budgeting, track spending, and build better money habits.
+              Simple tools, clear insights, and no finance jargon doing acrobatics in your face.
+            </div>
+            <div class="cta-row">
+              <button class="btn btn-primary" onclick="document.getElementById('calc').scrollIntoView({behavior:'smooth'})">Start Calculating</button>
+              <button class="btn btn-secondary" onclick="alert('Tip: Save 20% of income first, then automate it. Your future self will high-five you.')">Get a Money Tip</button>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Monthly Savings Goal</div>
+              <div class="value" id="goalValue">\12,500</div>
+              <div class="trend">+18% from last month</div>
+            </div>
+            <div class="stat">
+              <div class="label">Expense Reduction</div>
+              <div class="value">24%</div>
+              <div class="trend">Great progress</div>
+            </div>
+            <div class="stat">
+              <div class="label">Emergency Fund</div>
+              <div class="value">6 mo</div>
+              <div class="trend">On track</div>
+            </div>
+            <div class="stat">
+              <div class="label">Net Worth Growth</div>
+              <div class="value">+31%</div>
+              <div class="trend">This year</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>Budget Snapshot</h2>
+            <span>Where your money goes</span>
+          </div>
+          <div class="budget">
+            <div class="row">
+              <div class="name">Housing</div>
+              <div class="bar"><div class="fill" style="width: 42%"></div></div>
+              <div class="amount">42%</div>
+            </div>
+            <div class="row">
+              <div class="name">Food</div>
+              <div class="bar"><div class="fill" style="width: 18%"></div></div>
+              <div class="amount">18%</div>
+            </div>
+            <div class="row">
+              <div class="name">Transport</div>
+              <div class="bar"><div class="fill" style="width: 12%"></div></div>
+              <div class="amount">12%</div>
+            </div>
+            <div class="row">
+              <div class="name">Savings</div>
+              <div class="bar"><div class="fill" style="width: 20%"></div></div>
+              <div class="amount">20%</div>
+            </div>
+            <div class="row">
+              <div class="name">Fun</div>
+              <div class="bar"><div class="fill" style="width: 8%"></div></div>
+              <div class="amount">8%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right">
+        <div class="card">
+          <div class="section-title">
+            <h2>Finance Tools</h2>
+            <span>Quick wins</span>
+          </div>
+          <div class="tools">
+            <div class="tool">
+              <div class="emoji">📊</div>
+              <h3>Budget Planner</h3>
+              <p>Plan your monthly spending and keep your money in sync with your goals.</p>
+            </div>
+            <div class="tool">
+              <div class="emoji">🐷</div>
+              <h3>Savings Tracker</h3>
+              <p>Watch your emergency fund grow with small, consistent contributions.</p>
+            </div>
+            <div class="tool">
+              <div class="emoji">📈</div>
+              <h3>Investing Basics</h3>
+              <p>Learn simple ways to start investing without feeling overwhelmed.</p>
+            </div>
+            <div class="tool">
+              <div class="emoji">🧾</div>
+              <h3>Debt Strategy</h3>
+              <p>Make a clear plan to pay down debt faster and save on interest.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="calc">
+          <div class="section-title">
+            <h2>Monthly Savings Calculator</h2>
+            <span>Use the 50/30/20 idea</span>
+          </div>
+          <div class="calculator">
+            <div class="field">
+              <label for="income">Monthly income</label>
+              <input id="income" type="number" min="0" placeholder="e.g. 5000" value="5000" />
+            </div>
+            <div class="field">
+              <label for="rate">Savings rate (%)</label>
+              <input id="rate" type="number" min="0" max="100" placeholder="e.g. 20" value="20" />
+            </div>
+            <button class="btn btn-primary" onclick="calculateSavings()">Calculate</button>
+            <div class="result" id="result">
+              Save <strong>\$1,000</strong> per month to hit your goal.
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <div class="footer">Built for clear money habits — because financial peace is a very underrated aesthetic.</div>
+  </div>
+
+  <script>
+    function calculateSavings(){
+      const income = Number(document.getElementById('income').value) || 0;
+      const rate = Number(document.getElementById('rate').value) || 0;
+      const save = income * (rate / 100);
+      const monthly = save.toLocaleString(undefined, {maximumFractionDigits: 2});
+      document.getElementById('result').innerHTML = `Save <strong>$${monthly}</strong> per month to hit your goal.`;
+    }
+  </script>
+</body>
+</html>
